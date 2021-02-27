@@ -1,0 +1,13 @@
+.body{
+  -fx-background-image: url("https://i.pinimg.com/originals/a8/06/44/a806447ecbabad71ae43a40e0a3ea181.jpg");
+  -fx-background-size: 100% 100%;
+}
+
+.jfx-button{
+   -fx-background-color:#303F9F;
+   -fx-text-fill: white;
+}
+
+.jfx-button:hover{
+   -fx-background-color: #00E676;
+}
