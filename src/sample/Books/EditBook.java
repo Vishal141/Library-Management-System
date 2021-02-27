@@ -76,6 +76,13 @@ public class EditBook implements Initializable {
         }
     }
 
+    public void inflateData(Book book){
+        bId.setText(book.getId());
+        bTitle.setText(book.getTitle());
+        bAuthor.setText(book.getAuthor());
+        bPublisher.setText(book.getPublisher());
+    }
+
     public void cancel(ActionEvent actionEvent) {
         Stage stage = (Stage)bId.getScene().getWindow();
         stage.close();

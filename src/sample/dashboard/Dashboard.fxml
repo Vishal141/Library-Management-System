@@ -61,7 +61,7 @@
                      <graphic>
                         <ImageView fitHeight="48.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@../../../assets/book_add_icon_2.png" />
+                              <Image url="@../../resources/book_add_icon_2.png" />
                            </image>
                         </ImageView>
                      </graphic>
@@ -70,7 +70,7 @@
                      <graphic>
                         <ImageView fitHeight="50.0" fitWidth="54.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@../../../assets/add_member_icon_2.png" />
+                              <Image url="@../../resources/add_member_icon_2.png" />
                            </image>
                         </ImageView>
                      </graphic></Button>
@@ -78,7 +78,7 @@
                      <graphic>
                         <ImageView fitHeight="43.0" fitWidth="49.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@../../../assets/view_books_2.png" />
+                              <Image url="@../../resources/view_books_2.png" />
                            </image>
                         </ImageView>
                      </graphic></Button>
@@ -86,11 +86,18 @@
                      <graphic>
                         <ImageView fitHeight="47.0" fitWidth="58.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@../../../assets/view_members_icon_2.jpg" />
+                              <Image url="@../../resources/view_members_icon_2.jpg" />
                            </image>
                         </ImageView>
                      </graphic></Button>
-                  <Button contentDisplay="TOP" layoutX="10.0" layoutY="165.0" mnemonicParsing="false" onAction="#goToSettings" prefHeight="150.0" prefWidth="150.0" text="Settings" />
+                  <Button contentDisplay="TOP" layoutX="10.0" layoutY="165.0" mnemonicParsing="false" onAction="#goToSettings" prefHeight="150.0" prefWidth="150.0" text="Settings">
+                     <graphic>
+                        <ImageView fitHeight="48.0" fitWidth="56.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../resources/setting_icon_1.png" />
+                           </image>
+                        </ImageView>
+                     </graphic></Button>
                </children>
             </VBox>
          </right>
@@ -168,7 +175,10 @@
                                     </HBox>
                                     <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
                                        <children>
-                                          <JFXButton onAction="#issueBook" prefHeight="26.0" prefWidth="137.0" stylesheets="@../cssFiles/dashboard.css" text="Issue" />
+                                          <JFXButton onAction="#issueBook" prefHeight="33.0" prefWidth="118.0" stylesheets="@../cssFiles/dashboard.css" text="Issue">
+                                             <padding>
+                                                <Insets bottom="2.0" left="5.0" right="5.0" top="2.0" />
+                                             </padding></JFXButton>
                                        </children>
                                     </HBox>
                                  </children>

@@ -81,4 +81,11 @@ public class EditMember implements Initializable {
         Stage stage = (Stage) mId.getScene().getWindow();
         stage.close();
     }
+
+    public void inflateData(Member member) {
+        mId.setText(member.getId());
+        mName.setText(member.getName());
+        mEmail.setText(member.getEmailId());
+        mContactNo.setText(member.getMobileNo());
+    }
 }

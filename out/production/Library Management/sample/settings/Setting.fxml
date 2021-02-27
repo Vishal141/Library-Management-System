@@ -28,7 +28,7 @@
                         <Insets left="20.0" right="20.0" top="20.0" />
                     </VBox.margin>
                 </JFXTextField>
-            <JFXPasswordField fx:id="password" promptText="password">
+            <JFXPasswordField fx:id="password" labelFloat="true" promptText="password">
                <VBox.margin>
                   <Insets bottom="10.0" left="20.0" right="20.0" top="20.0" />
                </VBox.margin>

@@ -10,6 +10,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.stage.Stage;
+import sample.Controller;
 import sample.Database.login_db;
 
 import java.io.IOException;
@@ -49,6 +50,7 @@ public class Register implements Initializable {
                     Parent root = FXMLLoader.load(getClass().getResource("/sample/dashboard/Dashboard.fxml"));
                     stage.setTitle("Library Assistance");
                     stage.setScene(new Scene(root,650,470));
+                    Controller.setStageIcon(stage);
                     stage.show();
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -77,6 +79,7 @@ public class Register implements Initializable {
             Parent root = FXMLLoader.load(getClass().getResource("/sample/login/Login.fxml"));
             stage.setTitle("Login");
             stage.setScene(new Scene(root,600,400));
+            Controller.setStageIcon(stage);
             stage.show();
         } catch (IOException e) {
             e.printStackTrace();

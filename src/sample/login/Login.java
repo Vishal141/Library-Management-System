@@ -12,6 +12,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
+import sample.Controller;
 import sample.Database.login_db;
 import sample.dashboard.Dashboard;
 
@@ -49,6 +50,7 @@ public class Login implements Initializable {
                     Parent root = FXMLLoader.load(getClass().getResource("/sample/dashboard/Dashboard.fxml"));
                     stage.setTitle("Library Assistant");
                     stage.setScene(new Scene(root,650,450));
+                    Controller.setStageIcon(stage);
                     stage.show();
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -75,6 +77,7 @@ public class Login implements Initializable {
             Parent root = FXMLLoader.load(getClass().getResource("/sample/login/Register.fxml"));
             stage.setTitle("Create an Account");
             stage.setScene(new Scene(root,600,400));
+            Controller.setStageIcon(stage);
             stage.show();
         } catch (IOException e) {
             e.printStackTrace();

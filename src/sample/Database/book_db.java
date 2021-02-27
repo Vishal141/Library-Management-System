@@ -194,6 +194,20 @@ public class book_db {
         return false;
     }
 
+    //this will delete the book from database.
+    public boolean deleteBook(String id){
+        String query = "DELETE FROM book WHERE id=?";
+        try{
+            preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setString(1,id);
+            preparedStatement.executeUpdate();
+            return true;
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return false;
+    }
+
 
    //this will return total number of books present in the database
     public int getBookCount(){

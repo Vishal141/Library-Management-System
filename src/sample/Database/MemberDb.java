@@ -106,6 +106,36 @@ public class MemberDb {
         return false;
     }
 
+    //This will delete a member from database.
+    public boolean deleteMember(String id){
+        String query = "DELETE FROM member WHERE id=?";
+        try {
+            preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setString(1,id);
+            preparedStatement.executeUpdate();
+            return true;
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+        return false;
+    }
+
+    //this will check weather a user issued a book or not.
+    public boolean hasIssued(String id){
+        String query = "SELECT * FROM BookIssue WHERE memberId=?";
+        try {
+            preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setString(1,id);
+            resultSet = preparedStatement.executeQuery();
+            if (resultSet.next())
+                return true;
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return false;
+    }
+
     //that will return total number of member in database.
     public int getMemberCount(){
         String query="SELECT COUNT(*) FROM member";

@@ -23,6 +23,7 @@ import sample.Books.AddBook;
 import sample.Books.Book;
 import sample.Books.BookList;
 import sample.Books.IssueBook;
+import sample.Controller;
 import sample.Database.MemberDb;
 import sample.Database.book_db;
 import sample.Members.AddMember;
@@ -36,7 +37,6 @@ import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class Dashboard implements Initializable {
-
     @FXML
     StackPane stackPane;
     @FXML
@@ -98,6 +98,7 @@ public class Dashboard implements Initializable {
             Stage stage = new Stage(StageStyle.DECORATED);
             stage.setTitle(title);
             stage.setScene(new Scene(root,width,height));
+            Controller.setStageIcon(stage);
             stage.show();
         } catch (IOException e) {
             e.printStackTrace();
@@ -231,7 +232,7 @@ public class Dashboard implements Initializable {
             list.add("Member Contact No. :"+member.getMobileNo());
             list.add(" ");
             list.add("***** Issue Details: *****");
-            list.add("Issue Time : "+issueBook.getTimestamp().toGMTString());
+            list.add("Issue Time : "+issueBook.getTimestamp().toLocalDateTime().toString());
             list.add("Renew Count: "+issueBook.getRenewCount());
         }
         bookList.getItems().setAll(list);
