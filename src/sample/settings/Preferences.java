@@ -1,40 +1,50 @@
 package sample.settings;
 
 public class Preferences {
-    private static int NoOfDays=7;
-    private static float FinePerDay=5;
-    private static String USERNAME;
-    private static String PASSWORD;
+    private String noOfDayWithoutFine;
+    private String finePerDay;
+    private String username;
+    private String password;
 
-    public static int getNoOfDays() {
-        return NoOfDays;
+    public static String FinePerDay = "7";
+    public static String NoOfDayWithoutFine = "5";
+
+    public Preferences(String noOfDayWithoutFine, String finePerDay, String username, String password) {
+        this.noOfDayWithoutFine = noOfDayWithoutFine;
+        this.finePerDay = finePerDay;
+        this.username = username;
+        this.password = password;
     }
 
-    public void setNoOfDays(int noOfDays) {
-        NoOfDays = noOfDays;
+    public String getNoOfDayWithoutFine() {
+        return noOfDayWithoutFine;
     }
 
-    public float getFinePerDay() {
-        return FinePerDay;
+    public void setNoOfDayWithoutFine(String noOfDayWithoutFine) {
+        this.noOfDayWithoutFine = noOfDayWithoutFine;
     }
 
-    public void setFinePerDay(float finePerDay) {
-        FinePerDay = finePerDay;
+    public String getFinePerDay() {
+        return finePerDay;
     }
 
-    public String getUSERNAME() {
-        return USERNAME;
+    public void setFinePerDay(String finePerDay) {
+        this.finePerDay = finePerDay;
     }
 
-    public void setUSERNAME(String USERNAME) {
-        Preferences.USERNAME = USERNAME;
+    public String getUsername() {
+        return username;
     }
 
-    public String getPASSWORD() {
-        return PASSWORD;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
-    public void setPASSWORD(String PASSWORD) {
-        Preferences.PASSWORD = PASSWORD;
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 }

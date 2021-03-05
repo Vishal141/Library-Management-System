@@ -59,7 +59,7 @@ public class Login implements Initializable {
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setHeaderText(null);
                 alert.setTitle("Error");
-                alert.setContentText("Login failed");
+                alert.setContentText("Invalid Credential");
                 alert.showAndWait();
             }
         }else{

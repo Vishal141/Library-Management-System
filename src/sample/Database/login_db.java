@@ -92,24 +92,33 @@ public class login_db {
     }
 
     //that will edit preferences of library rules.
-//    public boolean editPreferences(int noOfDays,float finePerDay,String username,String password){
-//        if (login(username,password)){
-//            Preferences preferences = new Preferences();
-//            preferences.setNoOfDays(noOfDays);
-//            preferences.setFinePerDay(finePerDay);
-//            String query = "UPDATE preferences SET noOfDays=?,finePerDay=?";
-//            try {
-//                preparedStatement = connection.prepareStatement(query);
-//                preparedStatement.setInt(1,noOfDays);
-//                preparedStatement.setFloat(2,finePerDay);
-//                preparedStatement.executeUpdate();
-//                return true;
-//            }catch (Exception e){
-//                e.printStackTrace();
-//            }
-//        }else{
-//            return false;
-//        }
-//        return false;
-//    }
+    public boolean editPreferences(Preferences preferences){
+        String pass = getMd5(preferences.getPassword());
+        preferences.setPassword(pass);
+        try {
+            URL url = new URL(HTTP_URL+"/preferences/edit");
+            httpConnection =(HttpURLConnection) url.openConnection();
+            httpConnection.setRequestMethod("GET");
+            httpConnection.setDoOutput(true);
+
+            Gson gson = new Gson();
+            String json = gson.toJson(preferences);
+            httpConnection.setRequestProperty("Content-Type", "application/json; charset=UTF-8");
+            httpConnection.setFixedLengthStreamingMode(json.length());
+            OutputStream os = httpConnection.getOutputStream();
+
+            os.write(json.getBytes());
+            os.flush();
+            os.close();
+
+            BufferedReader reader = new BufferedReader(new InputStreamReader(httpConnection.getInputStream()));
+            String result = reader.readLine();
+            return (result.equals("EDITED"));
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return false;
+    }
 }

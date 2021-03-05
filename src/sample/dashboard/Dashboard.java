@@ -29,10 +29,14 @@ import sample.Database.book_db;
 import sample.Members.AddMember;
 import sample.Members.Member;
 import sample.Members.MemberList;
+import sample.settings.Preferences;
 
 import javax.swing.text.html.Option;
 import java.io.IOException;
 import java.net.URL;
+import java.sql.Timestamp;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
@@ -202,7 +206,7 @@ public class Dashboard implements Initializable {
                 Alert alert1 = new Alert(Alert.AlertType.ERROR);
                 alert1.setTitle("Failed");
                 alert1.setHeaderText(null);
-                alert1.setContentText("Book issue failed");
+                alert1.setContentText("Book is not available");
                 alert1.showAndWait();
             }
         }else{
@@ -234,6 +238,27 @@ public class Dashboard implements Initializable {
             list.add("***** Issue Details: *****");
             list.add("Issue Time : "+issueBook.getTimestamp().toLocalDateTime().toString());
             list.add("Renew Count: "+issueBook.getRenewCount());
+
+            //calculating total fine
+            Timestamp timestamp = issueBook.getTimestamp();
+            LocalDateTime localDate = timestamp.toLocalDateTime();
+            LocalDateTime localDateTime = LocalDateTime.now();
+
+            int y = localDateTime.getYear();
+            int m = (localDateTime.getMonth()).getValue();
+            int d = localDateTime.getDayOfMonth();
+
+            int Y = localDate.getYear();
+            int M = localDate.getMonth().getValue();
+            int D = localDate.getDayOfMonth();
+
+            int totalDay = (y-Y)*365+(m-M)*30+(d-D);
+            int totalFine = 0;
+            if(totalDay>Integer.parseInt(Preferences.NoOfDayWithoutFine))
+                totalFine = (totalDay-(Integer.parseInt(Preferences.NoOfDayWithoutFine)))*(Integer.parseInt(Preferences.FinePerDay));
+
+            list.add("Total Fine: "+totalFine+"\n");
+
         }
         bookList.getItems().setAll(list);
     }

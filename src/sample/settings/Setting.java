@@ -42,7 +42,8 @@ public class Setting implements Initializable {
                 fine==null || fine.equals("")||
                 pass==null || pass.equals("")))
         {
-            if (loginDb.editPreferences(Integer.parseInt(noOfD),Float.parseFloat(fine),uname,pass)){
+            Preferences preferences = new Preferences(noOfD,fine,uname,pass);
+            if (loginDb.editPreferences(preferences)){
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
                 alert.setTitle("Successful");
                 alert.setHeaderText(null);
