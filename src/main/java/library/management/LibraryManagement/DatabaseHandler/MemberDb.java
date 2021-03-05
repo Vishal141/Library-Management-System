@@ -5,7 +5,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import library.management.LibraryManagement.Members.Member;
+import org.springframework.stereotype.Service;
 
+@Service
 public class MemberDb {
 
     private Connection connection = null;
