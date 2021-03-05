@@ -1,0 +1,1 @@
+java --module-path D:\javasetup\javafx-sdk-15\lib --add-modules javafx.controls,javafx.fxml,javafx.graphics -jar "Library Management.jar"

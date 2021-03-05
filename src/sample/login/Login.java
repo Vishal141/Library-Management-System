@@ -74,7 +74,7 @@ public class Login implements Initializable {
     public void signUp(ActionEvent actionEvent) {
         stage = (Stage) body.getScene().getWindow();
         try {
-            Parent root = FXMLLoader.load(getClass().getResource("/sample/login/Register.fxml"));
+            Parent root = FXMLLoader.load(getClass().getResource("/sample/login/register.fxml"));
             stage.setTitle("Create an Account");
             stage.setScene(new Scene(root,600,400));
             Controller.setStageIcon(stage);

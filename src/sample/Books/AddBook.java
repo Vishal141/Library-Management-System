@@ -32,7 +32,7 @@ public class AddBook implements Initializable {
            bPublisher.getText()==null || bPublisher.equals("") ||
            bAuthor.getText()==null || bAuthor.getText().equals(""))){
 
-            Book book = new Book(bId.getText(),bTitle.getText(),bAuthor.getText(),bPublisher.getText());
+            TempBook book = new TempBook(bId.getText(),bTitle.getText(),bAuthor.getText(),bPublisher.getText(),true);
 
             bookDb.add_book(book);  //adding book to database.
 

@@ -1,0 +1,19 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="Library Management:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/Library_Management_jar</output-path>
+    <root id="archive" name="Library Management.jar">
+      <element id="module-output" name="Library Management" />
+      <element id="extracted-dir" path="D:/javasetup/javafx-sdk-15/lib/src.zip" path-in-jar="/" />
+      <element id="extracted-dir" path="D:/javasetup/javafx-sdk-15/lib/javafx-swt.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="D:/javasetup/javafx-sdk-15/lib/javafx.web.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="D:/javasetup/javafx-sdk-15/lib/javafx.base.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="D:/javasetup/javafx-sdk-15/lib/javafx.fxml.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="D:/javasetup/javafx-sdk-15/lib/javafx.media.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="D:/javasetup/javafx-sdk-15/lib/javafx.swing.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="D:/javasetup/javafx-sdk-15/lib/javafx.controls.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="D:/javasetup/javafx-sdk-15/lib/javafx.graphics.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="D:/java/java-se-8u41-ri/jre/lib/ext/mysql-connector.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="D:/javasetup/jar_files/jfoenix-9.0.10.jar" path-in-jar="/" />
+    </root>
+  </artifact>
+</component>

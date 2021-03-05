@@ -1,14 +1,24 @@
 package sample.Database;
 
+import com.google.gson.Gson;
 import sample.Books.Book;
 import sample.Members.Member;
 
+import java.io.OutputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 
 public class MemberDb {
+
+    private static final String HTTP_URL = "http://localhost:8080/members";
+
+    private HttpURLConnection UrlConnection=null;
+
+    private static final Gson GSON = new Gson();
 
     private Connection connection = null;
     private PreparedStatement preparedStatement=null;
@@ -25,15 +35,22 @@ public class MemberDb {
 
     //this will add a member in database.
     public void addMember(Member member){
-        String query = "INSERT INTO member VALUES(?,?,?,?)";
         try {
-            preparedStatement = connection.prepareStatement(query);
-            preparedStatement.setString(1,member.getId());
-            preparedStatement.setString(2,member.getName());
-            preparedStatement.setString(3,member.getEmailId());
-            preparedStatement.setString(4,member.getMobileNo());
-            preparedStatement.execute();
-        }catch (Exception e){
+            URL url = new URL(HTTP_URL+"/addBook");
+            UrlConnection = (HttpURLConnection)url.openConnection();
+            UrlConnection.setRequestMethod("POST");
+            UrlConnection.setDoOutput(true);
+            UrlConnection.setRequestProperty("Content-Type", "application/json; charset=UTF-8");
+
+            String json = GSON.toJson(member);
+
+            UrlConnection.setFixedLengthStreamingMode(json.length());
+            OutputStream os = UrlConnection.getOutputStream();
+            os.write(json.getBytes());
+            os.flush();
+            os.close();
+
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -149,6 +166,4 @@ public class MemberDb {
         }
         return 0;
     }
-
-
 }

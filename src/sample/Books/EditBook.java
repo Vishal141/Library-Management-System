@@ -44,8 +44,8 @@ public class EditBook implements Initializable {
                     book.setAuthor(bAuthor.getText());
                 if(bPublisher!=null && !bPublisher.getText().equals(""))
                     book.setPublisher(bPublisher.getText());
-
-                if(bookDb.editBookDetails(book)){
+                TempBook book1 = new TempBook(book.getId(),book.getTitle(),book.getAuthor(),book.getPublisher(),book.getIsAvailable());
+                if(bookDb.editBookDetails(book1)){
                     Alert alert1 = new Alert(Alert.AlertType.INFORMATION);
                     alert1.setHeaderText(null);
                     alert1.setTitle("Successful");
