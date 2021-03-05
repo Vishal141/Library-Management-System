@@ -32,4 +32,21 @@ public class LoginController {
         return "REJECT";
     }
     
+    @RequestMapping("/preferences/get")
+    public Preferences getPreferences(){
+        return loginDb.getPreferences();
+    }
+    
+    @RequestMapping("/preferences/edit")
+    public String editPreferences(@RequestBody Preferences preferences){
+        boolean result = loginDb.login(preferences.getUsername(),preferences.getPassword());
+        if(result){
+            boolean ans = loginDb.editPreferences(preferences);
+            if(ans)
+                return "EDITED";
+        }
+        
+        return "FAILED";
+    }
+    
 }
