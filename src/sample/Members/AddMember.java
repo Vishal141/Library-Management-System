@@ -39,7 +39,7 @@ public class AddMember implements Initializable {
                 email==null || email.equals("") ||
                 mobile==null || mobile.equals("")))
         {
-            Member member = new Member(Name,MemberId,email,mobile);
+            TempMember member = new TempMember(Name,MemberId,email,mobile);
             MemberDb memberDb = new MemberDb();
             memberDb.addMember(member);   //adding a new member in the library.
 

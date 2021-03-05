@@ -21,17 +21,8 @@ import java.util.HashMap;
 public class login_db {
 
     private static final String HTTP_URL = "http://localhost:8080/";
-
     private HttpURLConnection httpConnection=null;
 
-    private Connection connection=null;
-    private PreparedStatement preparedStatement=null;
-    private ResultSet resultSet;
-
-    public login_db(){
-        Connect connect = Connect.getInstance();
-         connection = connect.getConnection();
-    }
 
     //for getting hash value of password.
     private String getMd5(String input){
@@ -65,23 +56,6 @@ public class login_db {
 
         return false;
     }
-
-//    public boolean register(String name,String username,String email,String password){
-//        String hash = getMd5(password);
-//        String query = "INSERT INTO users VALUES(?,?,?,?)";
-//        try {
-//            preparedStatement = connection.prepareStatement(query);
-//            preparedStatement.setString(1,name);
-//            preparedStatement.setString(2,username);
-//            preparedStatement.setString(3,email);
-//            preparedStatement.setString(4,hash);
-//            preparedStatement.executeUpdate();
-//            return true;
-//        }catch (Exception e){
-//            e.printStackTrace();
-//        }
-//        return false;
-//    }
 
     public boolean register(String name,String username,String email,String password){
         try {
@@ -118,24 +92,24 @@ public class login_db {
     }
 
     //that will edit preferences of library rules.
-    public boolean editPreferences(int noOfDays,float finePerDay,String username,String password){
-        if (login(username,password)){
-            Preferences preferences = new Preferences();
-            preferences.setNoOfDays(noOfDays);
-            preferences.setFinePerDay(finePerDay);
-            String query = "UPDATE preferences SET noOfDays=?,finePerDay=?";
-            try {
-                preparedStatement = connection.prepareStatement(query);
-                preparedStatement.setInt(1,noOfDays);
-                preparedStatement.setFloat(2,finePerDay);
-                preparedStatement.executeUpdate();
-                return true;
-            }catch (Exception e){
-                e.printStackTrace();
-            }
-        }else{
-            return false;
-        }
-        return false;
-    }
+//    public boolean editPreferences(int noOfDays,float finePerDay,String username,String password){
+//        if (login(username,password)){
+//            Preferences preferences = new Preferences();
+//            preferences.setNoOfDays(noOfDays);
+//            preferences.setFinePerDay(finePerDay);
+//            String query = "UPDATE preferences SET noOfDays=?,finePerDay=?";
+//            try {
+//                preparedStatement = connection.prepareStatement(query);
+//                preparedStatement.setInt(1,noOfDays);
+//                preparedStatement.setFloat(2,finePerDay);
+//                preparedStatement.executeUpdate();
+//                return true;
+//            }catch (Exception e){
+//                e.printStackTrace();
+//            }
+//        }else{
+//            return false;
+//        }
+//        return false;
+//    }
 }

@@ -46,7 +46,8 @@ public class EditMember implements Initializable {
                 if(mContactNo!=null && !mContactNo.getText().equals(""))
                     member.setMobileNo(mContactNo.getText());
 
-                if(memberDb.editMemberDetails(member)){
+                TempMember member1 = new TempMember(member.getName(),member.getId(),member.getEmailId(),member.getMobileNo());
+                if(memberDb.editMemberDetails(member1)){
                     Alert alert1 = new Alert(Alert.AlertType.INFORMATION);
                     alert1.setHeaderText(null);
                     alert1.setTitle("Successful");
