@@ -18,14 +18,15 @@ public class MemberDb {
     private static int MemberCount = 0;
 
     public MemberDb() {
-        ConnectDatabase connect = ConnectDatabase.getInstance();
-        connection = connect.getConnection();
+//        ConnectDatabase connect = ConnectDatabase.getInstance();
+//        connection = connect.getConnection();
 
     }
 
     //this will add a member in database.
-    public void addMember(Member member) {
+    public void addMember(Member member,String apiKey) {
         String query = "INSERT INTO member VALUES(?,?,?,?)";
+        connection = ConnectDatabase.getInstance(apiKey);
         try {
             preparedStatement = connection.prepareStatement(query);
             preparedStatement.setString(1, member.getId());
@@ -39,8 +40,9 @@ public class MemberDb {
     }
 
     //this will return a list of all the member.
-    public ArrayList<Member> getMembers() {
+    public ArrayList<Member> getMembers(String apiKey) {
         String query = "SELECT * FROM member";
+        connection = ConnectDatabase.getInstance(apiKey);
         members = new ArrayList<Member>();
         try {
             preparedStatement = connection.prepareStatement(query);
@@ -63,8 +65,9 @@ public class MemberDb {
     }
 
     //this will return a member instance having id equal to id provided in argument.
-    public Member getMemberById(String id) {
+    public Member getMemberById(String id,String apiKey) {
         String query = "SELECT * FROM member WHERE id=?";
+        connection = ConnectDatabase.getInstance(apiKey);
         Member member = null;
         try {
             preparedStatement = connection.prepareStatement(query);
@@ -86,8 +89,9 @@ public class MemberDb {
     }
 
     //this will edit member details.
-    public boolean editMemberDetails(Member member) {
+    public boolean editMemberDetails(Member member,String apiKey) {
         String query = "UPDATE member SET name=?,email=?,contactNo=? WHERE id=?";
+        connection = ConnectDatabase.getInstance(apiKey);
         try {
             preparedStatement = connection.prepareStatement(query);
             preparedStatement.setString(1, member.getName());
@@ -103,8 +107,9 @@ public class MemberDb {
     }
 
     //This will delete a member from database.
-    public boolean deleteMember(String id) {
+    public boolean deleteMember(String id,String apiKey) {
         String query = "DELETE FROM member WHERE id=?";
+        connection = ConnectDatabase.getInstance(apiKey);
         try {
             preparedStatement = connection.prepareStatement(query);
             preparedStatement.setString(1, id);
@@ -118,8 +123,9 @@ public class MemberDb {
     }
 
     //this will check weather a user issued a book or not.
-    public boolean hasIssued(String id) {
+    public boolean hasIssued(String id,String apiKey) {
         String query = "SELECT * FROM BookIssue WHERE memberId=?";
+        connection = ConnectDatabase.getInstance(apiKey);
         try {
             preparedStatement = connection.prepareStatement(query);
             preparedStatement.setString(1, id);

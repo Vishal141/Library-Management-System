@@ -17,8 +17,8 @@ public class LoginDb {
     private ResultSet resultSet;
 
     public LoginDb() {
-        ConnectDatabase connect = ConnectDatabase.getInstance();
-        connection = connect.getConnection();
+//        ConnectDatabase connect = ConnectDatabase.getInstance();
+//        connection = connect.getConnection();
     }
 
     //for getting hash value of password.
@@ -38,9 +38,10 @@ public class LoginDb {
         return null;
     }
 
-    public boolean login(String username, String password) {
+    public boolean login(String username, String password,String apiKey) {
         //String hash = getMd5(password);
         String query = "SELECT * FROM users WHERE username=? AND password=?";
+        connection = ConnectDatabase.getInstance(apiKey);
         try {
             preparedStatement = connection.prepareStatement(query);
             preparedStatement.setString(1, username);
@@ -55,9 +56,10 @@ public class LoginDb {
         return false;
     }
 
-    public boolean register(String name, String username, String email, String password) {
+    public boolean register(String name, String username, String email, String password,String apiKey) {
         //String hash = getMd5(password);
         String query = "INSERT INTO users VALUES(?,?,?,?)";
+        connection = ConnectDatabase.getInstance(apiKey);
         try {
             preparedStatement = connection.prepareStatement(query);
             preparedStatement.setString(1, name);
@@ -73,8 +75,9 @@ public class LoginDb {
     }
 
     
-    public Preferences getPreferences(){
+    public Preferences getPreferences(String apiKey){
         String query = "SELECT * FROM preferences";
+        connection = ConnectDatabase.getInstance(apiKey);
         Preferences preferences=null;
         
         try {
@@ -94,8 +97,9 @@ public class LoginDb {
     
     
     //that will edit preferences of library rules.
-    public boolean editPreferences(Preferences preferences) {
+    public boolean editPreferences(Preferences preferences,String apiKey) {
         String query = "UPDATE preferences SET noOfDays=?,finePerDay=?";
+        connection = ConnectDatabase.getInstance(apiKey);
         int noOfDays = Integer.parseInt(preferences.getNoOfDayWithoutFine());
         float finePerDay = Float.parseFloat(preferences.getFinePerDay());
         try {

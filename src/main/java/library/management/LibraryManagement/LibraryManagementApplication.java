@@ -10,7 +10,7 @@ import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 public class LibraryManagementApplication {
 
 	public static void main(String[] args) {
-            ConnectDatabase connect = ConnectDatabase.getInstance();
+            //ConnectDatabase connect = ConnectDatabase.getInstance();
 	    SpringApplication.run(LibraryManagementApplication.class, args);
 	}
 

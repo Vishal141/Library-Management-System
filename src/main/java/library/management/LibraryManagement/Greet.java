@@ -8,10 +8,8 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class Greet {
     
-    @RequestMapping("/book/{id}")
-    public Book sayHello(@PathVariable String id){
-        if(id.equals("H001"))
-            return new Book("H001","Harry Potter","J.K. Rowling","Bloomsbury");
-        return new Book();
+    @RequestMapping("/greet")
+    public String sayHello(){
+        return "Hello";
     }   
 }
