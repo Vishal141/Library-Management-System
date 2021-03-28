@@ -1,6 +1,9 @@
 package sample.Database;
 
 import com.google.gson.Gson;
+import sample.requests.SetPreferencesRequest;
+import sample.requests.SignInRequest;
+import sample.requests.SignUpRequest;
 import sample.settings.Preferences;
 
 import java.io.BufferedReader;
@@ -9,18 +12,15 @@ import java.io.ObjectOutputStream;
 import java.io.OutputStream;
 import java.math.BigInteger;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.util.HashMap;
 
 public class login_db {
 
     private static final String HTTP_URL = "http://localhost:8080/";
+    private static String apiKey = "library_assistance";
+
     private HttpURLConnection httpConnection=null;
 
 
@@ -44,9 +44,22 @@ public class login_db {
     public boolean login(String username,String password){
         String pass = getMd5(password);
         try {
-            URL url = new URL(HTTP_URL+"/login/"+username+"&"+pass);
+            URL url = new URL(HTTP_URL+"/login");
             httpConnection =(HttpURLConnection) url.openConnection();
             httpConnection.setRequestMethod("GET");
+            httpConnection.setDoOutput(true);
+            httpConnection.setRequestProperty("Content-Type", "application/json; charset=UTF-8");
+
+            SignInRequest request = new SignInRequest(username,pass,apiKey);
+            Gson gson = new Gson();
+            String json = gson.toJson(request);
+
+            httpConnection.setFixedLengthStreamingMode(json.length());
+            OutputStream os = httpConnection.getOutputStream();
+            os.write(json.getBytes());
+            os.flush();
+            os.close();
+
             BufferedReader reader = new BufferedReader(new InputStreamReader(httpConnection.getInputStream()));
             String result = reader.readLine();
             return (result.equals("ACCEPT"));
@@ -64,14 +77,10 @@ public class login_db {
             httpConnection.setDoOutput(true);
             httpConnection.setRequestProperty("Content-Type", "application/json; charset=UTF-8");
 
-            HashMap<String,String> map = new HashMap<>();
-            map.put("name",name);
-            map.put("username",username);
-            map.put("email",email);
-            map.put("password",getMd5(password));
+            SignUpRequest request = new SignUpRequest(name,username,email,getMd5(password),apiKey);
 
             Gson gson = new Gson();
-            String json = gson.toJson(map);
+            String json = gson.toJson(request);
 
             httpConnection.setFixedLengthStreamingMode(json.length());
             OutputStream out = httpConnection.getOutputStream();
@@ -101,8 +110,10 @@ public class login_db {
             httpConnection.setRequestMethod("GET");
             httpConnection.setDoOutput(true);
 
+            SetPreferencesRequest request = new SetPreferencesRequest(apiKey,preferences);
+
             Gson gson = new Gson();
-            String json = gson.toJson(preferences);
+            String json = gson.toJson(request);
             httpConnection.setRequestProperty("Content-Type", "application/json; charset=UTF-8");
             httpConnection.setFixedLengthStreamingMode(json.length());
             OutputStream os = httpConnection.getOutputStream();

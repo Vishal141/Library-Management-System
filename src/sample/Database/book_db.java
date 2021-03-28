@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import sample.Books.Book;
 import sample.Books.IssueBook;
 import sample.Books.TempBook;
+import sample.requests.*;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -17,6 +18,9 @@ import java.util.ArrayList;
 public class book_db {
     private static final String HTTP_URL = "http://localhost:8080/books";
     private static final Gson GSON = new Gson();
+
+    private static String apiKey="library_assistance";
+
     private HttpURLConnection UrlConnection=null;
     private static ArrayList<Book> books=null;
 
@@ -29,7 +33,9 @@ public class book_db {
             UrlConnection.setDoOutput(true);
             UrlConnection.setRequestProperty("Content-Type", "application/json; charset=UTF-8");
 
-            String json = GSON.toJson(book);
+            AddBookRequest request = new AddBookRequest(apiKey,book);
+
+            String json = GSON.toJson(request);
 
             UrlConnection.setFixedLengthStreamingMode(json.length());
             OutputStream os = UrlConnection.getOutputStream();
@@ -44,20 +50,27 @@ public class book_db {
 
 //    //using this method we get all books present in the database
     public ArrayList<Book> getBooks(){
-        TempBook[] tmpbooks;
+        ArrayList<TempBook> tmpbooks;
         try {
             URL url = new URL(HTTP_URL+"/AllBooks");
             UrlConnection = (HttpURLConnection)url.openConnection();
             UrlConnection.setRequestMethod("GET");
+            UrlConnection.setDoOutput(true);
+            UrlConnection.setRequestProperty("Content-Type", "application/json; charset=UTF-8");
+
+            AllBookRequest request = new AllBookRequest(apiKey,null);
+            String json1 = GSON.toJson(request);
+            UrlConnection.setFixedLengthStreamingMode(json1.length());
+            OutputStream os = UrlConnection.getOutputStream();
+            os.write(json1.getBytes());
+            os.flush();
+            os.close();
 
             BufferedReader reader = new BufferedReader(new InputStreamReader(UrlConnection.getInputStream()));
-            String line;
-            String json = "";
-            while ((line=reader.readLine())!=null){
-                json += line;
-            }
+            String json = reader.readLine();
 
-            tmpbooks = GSON.fromJson(json,TempBook[].class);
+            AllBookRequest request1 = GSON.fromJson(json,AllBookRequest.class);
+            tmpbooks = request1.getBooks();
 
             books = new ArrayList<Book>();
             for(TempBook book:tmpbooks){
@@ -82,14 +95,23 @@ public class book_db {
             URL url = new URL(HTTP_URL+"/book/"+id);
             UrlConnection = (HttpURLConnection)url.openConnection();
             UrlConnection.setRequestMethod("GET");
+            UrlConnection.setDoOutput(true);
+            UrlConnection.setRequestProperty("Content-Type","application/json; charset=UTF-8");
+
+            AddBookRequest request = new AddBookRequest(apiKey,null);
+
+            String json1 = GSON.toJson(request);
+            UrlConnection.setFixedLengthStreamingMode(json1.length());
+            OutputStream os = UrlConnection.getOutputStream();
+            os.write(json1.getBytes());
+            os.flush();
+            os.close();
 
             BufferedReader reader = new BufferedReader(new InputStreamReader(UrlConnection.getInputStream()));
-            String json="";
-            String line;
-            while((line=reader.readLine())!=null)
-                json += line;
+            String json = reader.readLine();
 
-            TempBook tempBook = GSON.fromJson(json,TempBook.class);
+            request = GSON.fromJson(json,AddBookRequest.class);
+            TempBook tempBook = request.getBook();
 
             book = new Book(tempBook.getId(),tempBook.getTitle(),tempBook.getAuthor(),tempBook.getPublisher());
             book.setIsAvailable(tempBook.getIsAvailable());
@@ -106,9 +128,19 @@ public class book_db {
 
     public boolean issueBook(String bookId,String memberId){
         try {
-            URL url = new URL(HTTP_URL+"/issue"+"/"+bookId+"&"+memberId);
+            URL url = new URL(HTTP_URL+"/issue");
             UrlConnection = (HttpURLConnection)url.openConnection();
             UrlConnection.setRequestMethod("GET");
+            UrlConnection.setDoOutput(true);
+            UrlConnection.setRequestProperty("Content-Type","application/json; charset=UTF-8");
+
+            IssueBookRequest request = new IssueBookRequest(apiKey,bookId,memberId,null);
+            String json = GSON.toJson(request);
+
+            OutputStream os = UrlConnection.getOutputStream();
+            os.write(json.getBytes());
+            os.flush();
+            os.close();
 
             BufferedReader reader = new BufferedReader(new InputStreamReader(UrlConnection.getInputStream()));
             String result = reader.readLine();
@@ -126,17 +158,25 @@ public class book_db {
     public IssueBook getIssuedBookInfo(String bookId){
         IssueBook issueBook=null;
         try {
-            URL url = new URL(HTTP_URL+"/issue/book/"+bookId);
+            URL url = new URL(HTTP_URL+"/issue/book");
             UrlConnection = (HttpURLConnection)url.openConnection();
             UrlConnection.setRequestMethod("GET");
+            UrlConnection.setDoOutput(true);
+            UrlConnection.setRequestProperty("Content-Type","application/json; charset=UTF-8");
+
+            IssueBookRequest request = new IssueBookRequest(apiKey,bookId,null,null);
+            String json1 = GSON.toJson(request);
+
+            OutputStream os = UrlConnection.getOutputStream();
+            os.write(json1.getBytes());
+            os.flush();
+            os.close();
 
             BufferedReader reader = new BufferedReader(new InputStreamReader(UrlConnection.getInputStream()));
-            String json="";
-            String line;
-            while((line=reader.readLine())!=null)
-                json += line;
+            String json = reader.readLine();
 
-            issueBook = GSON.fromJson(json,IssueBook.class);
+            request = GSON.fromJson(json,IssueBookRequest.class);
+            issueBook = request.getBook();
 
             return issueBook;
 
@@ -150,9 +190,19 @@ public class book_db {
    //This will increase the renew count of book having id bookId.
    public boolean renewBook(String bookId,int renewCount){
        try {
-           URL url = new URL(HTTP_URL+"/issue/renew/"+bookId);
+           URL url = new URL(HTTP_URL+"/issue/renew");
            UrlConnection = (HttpURLConnection)url.openConnection();
            UrlConnection.setRequestMethod("GET");
+           UrlConnection.setDoOutput(true);
+           UrlConnection.setRequestProperty("Content-Type","application/json; charset=UTF-8");
+
+           SubmitRenewRequest request = new SubmitRenewRequest(apiKey,bookId,"Renew");
+           String json = GSON.toJson(request);
+
+           OutputStream os = UrlConnection.getOutputStream();
+           os.write(json.getBytes());
+           os.flush();
+           os.close();
 
            BufferedReader reader = new BufferedReader(new InputStreamReader(UrlConnection.getInputStream()));
            String result = reader.readLine();
@@ -168,9 +218,19 @@ public class book_db {
    //this will delete the book from BookIssue table and set availability true.
    public boolean submitBook(String bookId){
        try {
-           URL url = new URL(HTTP_URL+"/issue/return/"+bookId);
+           URL url = new URL(HTTP_URL+"/issue/return");
            UrlConnection = (HttpURLConnection)url.openConnection();
            UrlConnection.setRequestMethod("GET");
+           UrlConnection.setDoOutput(true);
+           UrlConnection.setRequestProperty("Content-Type","application/json; charset=UTF-8");
+
+           SubmitRenewRequest request = new SubmitRenewRequest(apiKey,bookId,"Submit");
+           String json = GSON.toJson(request);
+
+           OutputStream os = UrlConnection.getOutputStream();
+           os.write(json.getBytes());
+           os.flush();
+           os.close();
 
            BufferedReader reader = new BufferedReader(new InputStreamReader(UrlConnection.getInputStream()));
            String result = reader.readLine();
@@ -192,7 +252,8 @@ public class book_db {
             UrlConnection.setDoOutput(true);
             UrlConnection.setRequestProperty("Content-Type", "application/json; charset=UTF-8");
 
-            String json = GSON.toJson(book);
+            AddBookRequest request = new AddBookRequest(apiKey,book);
+            String json = GSON.toJson(request);
 
             UrlConnection.setFixedLengthStreamingMode(json.length());
             OutputStream os = UrlConnection.getOutputStream();
@@ -214,9 +275,19 @@ public class book_db {
     //this will delete the book from database.
     public boolean deleteBook(String id){
         try {
-            URL url = new URL(HTTP_URL+"/delete/"+id);
+            URL url = new URL(HTTP_URL+"/delete");
             UrlConnection = (HttpURLConnection)url.openConnection();
             UrlConnection.setRequestMethod("GET");
+            UrlConnection.setDoOutput(true);
+            UrlConnection.setRequestProperty("Content-Type","application/json; charset=UTF-8");
+
+            DeleteBookRequest request = new DeleteBookRequest(apiKey,id);
+            String json = GSON.toJson(request);
+
+            OutputStream os = UrlConnection.getOutputStream();
+            os.write(json.getBytes());
+            os.flush();
+            os.close();
 
             BufferedReader reader = new BufferedReader(new InputStreamReader(UrlConnection.getInputStream()));
             String result = reader.readLine();
